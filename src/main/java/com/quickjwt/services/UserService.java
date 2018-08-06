@@ -1,5 +1,6 @@
 package com.quickjwt.services;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.quickjwt.entities.Authority;
 import com.quickjwt.entities.User;
 import com.quickjwt.exceptions.UserNotFoundException;
@@ -44,3 +45,4 @@ public class UserService implements UserDetailsService {
         this.userRepository.save(user);
     }
 }
+
