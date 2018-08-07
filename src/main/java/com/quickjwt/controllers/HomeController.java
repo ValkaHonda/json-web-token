@@ -12,4 +12,9 @@ public class HomeController {
     public String getHomePage(){
         return "home";
     }
+
+    @GetMapping("/resource")
+    public String getResource(){
+        return "This is the resource that is only for users that are log in! You are Log in so don't worry!";
+    }
 }

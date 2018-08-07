@@ -1,5 +1,7 @@
 package com.quickjwt.configuration;
 
+import com.quickjwt.configuration.jwt.JWTConfigurer;
+import com.quickjwt.configuration.jwt.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+    @Autowired
+    private TokenProvider tokenProvider;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -45,7 +48,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers("/**").authenticated();
+                .antMatchers("/**").authenticated()
+                .and()
+                .apply(securityConfigurerAdapter());
+
+    }
+
+    private JWTConfigurer securityConfigurerAdapter() {
+        return new JWTConfigurer(tokenProvider);
     }
 
 }
